@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="ja">
+
+  <head>
+    <script type="text/x-mathjax-config">
+
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+
+    </script>
+
+    <script type="text/javascript" async 
+
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+
+    </script>
+
+  </head>
+
+  <body>
+    <p> 次の動的システムの適応同定について考察しましょう。この動的システムは現象としては減衰を有する単振動系です。</p>
+
+    \begin{align}
+    \ddot x + a\dot x + bx = 0 \label{eq:VibEqn}
+    \end{align}
+
+     <p> ここに、\(x\)は振幅、\(a > 0\)は減衰係数、\(b = \omega_0^2>0\)、\(\omega_0\)は固有振動数です。計算機の中で計算する規範モデルを次式で与えます。 </p> 
+
+    \begin{align}
+    \ddot x_M + \hat a\dot x_M + \hat bx_M = 0 \label{eq:MdlEqn}
+    \end{align}
+
+     <p> ここに、\(x_M\)は規範モデルの振幅、\(\tilde b\)は\(b\)の推定値です。 </p> 
+
+     <p> 式\eqref{eq:MdlEqn}の両辺から式\eqref{eq:VibEqn}の両辺をそれぞれ引きます。 </p> 
+
+    \begin{align*}
+    (\ddot x_M - \ddot x) + (\dot x_M - \dot x)  + (\hat a \dot x_M - a\dot x) + (\hat b x_M - bx) =& (\ddot x_M - \ddot x) + (\dot x - \dot x_M)\\
+     &+ \hat a (\dot x_M - \dot x) - (\hat a - a)\dot x\\
+     &+ \hat b (x_M - x) - (\hat b - b)x\\
+     =& 0 \label{eq:DifEqn}
+    \end{align*}
+
+     <p> ここで、\(e = x_M - x\)、\(\tilde a = \hat a - a\)、\(\tilde b = \hat b - b\)とおくと次式が得られます。 </p> 
+
+    \begin{align}
+    \ddot e + \hat a e + \hat b e = -\tilde a \dot x-\tilde b x \label{eq:ErrEqn}
+    \end{align}
+
+     <p> Popovの超安定論を適用するために\(r\)と\(\varepsilon\)を次式で与えます。 </p> 
+
+    \begin{align}
+    r =  \tilde{a}\dot x + \tilde{b}y,~~~\varepsilon = e + ce. \label{eq:ExdEqn}
+    \end{align}
+
+    式\eqref{eq:ErrEqn}と\eqref{eq:ExdEqn} から線形前向きブロックの入力\(-r\)と出力\(\varepsilon\)の関係式は次式となります。
+    \begin{align}
+    \ddot e + \hat a e + \hat b e = -r,~~~\varepsilon = e + ce.  \label{eq:ErrEqn2}
+    \end{align}
+
+    <p> すると、Popov積分は次式となります。 </p> 
+
+   \begin{align}
+   \int_{0}^{t}r\varepsilon dt= \int_{0}^{t}(\tilde{a}\dot x\varepsilon + \tilde{b}x\varepsilon) dt \label{eq:IntgEqn}
+   \end{align}
+   
+    <p> 適応同定を実現するために適応同定則を次式で与えます。 </p> 
+   
+   \begin{align}
+   \dot{\tilde{a}} = \alpha \dot x\varepsilon, \dot{\tilde{b}} = \beta x\varepsilon. \label{eq:AdptRule}
+   \end{align}
+   
+    <p> ここに、\(\alpha\)、\(\beta\)は定数です。 式\eqref{eq:IntgEqn}に式\eqref{eq:AdptRule}を代入すると次式が得られます。 </p> 
+   
+   \begin{align*}
+   \int_{0}^{t}r\varepsilon dt= \int_{0}^{t}(\frac{1}{\alpha}\dot{\tilde{a}}\tilde{a} + \frac{1}{\beta}\dot{\tilde{b}}\tilde{b}) dt = [\frac{1}{2\alpha}\tilde{a}^2 + \frac{1}{2\beta}\tilde{b}^2]_0^t \ge -\frac{1}{2\alpha}\tilde{a}(0)^2 -\frac{1}{2\beta}\tilde{b}(0)^2
+   \end{align*}
+
+   <p> これで適応同定則\eqref{eq:AdptRule}によりPopovの積分不等式が成立することが確認できました。\(a\)、\(b\)は定数なので、\(\dot{\tilde a} = \dot{\hat a}\)、\(\dot{\tilde b} = \dot{\hat b}\)となることに注意すれば適応同定則は次式となります。 </p> 
+  
+  \begin{align}
+   \dot{\hat{a}} = \alpha \dot x\varepsilon、 \dot{\hat{b}} = \alpha y\varepsilon \label{eq:AdptRule2}
+  \end{align}
+
+  <p>次に強正実条件を確認します。式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=\varepsilon(s)/r(s)\)は次式となります。</p>
+  \begin{align}
+   G(s) = \frac{1+cs}{s^2+as+b} \label{eq:TransFanc}
+  \end{align}
+ 
+  <p>式\eqref{eq:TransFanc}の\(s\)に実数を代入すると\(G(s)\)も実数になり、s面の右半平面\(Re[s]\ge0\)に\(G(s)\)の極(分母：\(s^2+as+b=0\)の解)がないので、強正実条件(1)と(2)は確認できます。次に強正実条件(3)を確認します。</p>
+ 
+  \begin{align}
+   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}] > 0\label{eq:RealPart}
+  \end{align}
+
+<p>分母を有利化すると次式になります。</p>
+
+  \begin{align*}
+   Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(b-\omega^2 +ja\omega)}{(b -\omega^2)^2 + a^2\omega^2}]\\
+   &= Re[\frac{(b-\omega^2+ac\omega^2)+j\{c\omega(b-\omega^2)-a\omega\}}{(b -\omega^2)^2 + a^2\omega^2}]\\
+   &= \frac{b+(ac-1)\omega^2}{(b -\omega^2)^2 + a^2\omega^2}> 0 \label{eq:RealPart2}
+   \end{align*}
+
+  <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば、強正実条件(3)が満足されます。</p>
+
+  <p>動的システム\eqref{eq:VibEqn}に規範モデル\eqref{eq:MdlEqn}を適応させる適応同定則と強正実条件を以下にまとめます。</p>
+  <p>適応同定則：</p>
+  \begin{align*}
+   \dot{\hat{a}} = \alpha \dot x\varepsilon、 \dot{\hat{b}} = \beta x\varepsilon.
+  \end{align*}
+
+  <p>強誠実条件：</p>
+  \begin{align*}
+   c > \frac{1}{a}
+  \end{align*} 
+</body>
+
+</html>
