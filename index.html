@@ -51,7 +51,7 @@
      <p><a href="https://aoyamakohbo.github.io/HypStb/">Popovの超安定論</a>を適用するために\(r\)と\(\varepsilon\)を次式で与えます。 </p> 
 
     \begin{align}
-    r =  \tilde{a}\dot x + \tilde{b}y,~~~\varepsilon = e + ce. \label{eq:ExdEqn}
+    r =  \tilde{a}\dot x + \tilde{b}y,~~~\varepsilon = e + c\dot e. \label{eq:ExdEqn}
     \end{align}
 
     式\eqref{eq:ErrEqn}と\eqref{eq:ExdEqn} から線形前向きブロックの入力\(-r\)と出力\(\varepsilon\)の関係式は次式となります。
@@ -80,7 +80,7 @@
    <p> これで適応同定則\eqref{eq:AdptRule}によりPopovの積分不等式が成立することが確認できました。\(a\)、\(b\)は定数なので、\(\dot{\tilde a} = \dot{\hat a}\)、\(\dot{\tilde b} = \dot{\hat b}\)となることに注意すれば適応同定則は次式となります。 </p> 
   
   \begin{align}
-   \dot{\hat{a}} = \alpha \dot x\varepsilon、 \dot{\hat{b}} = \alpha x\varepsilon \label{eq:AdptRule2}
+   \dot{\hat{a}} = \alpha \dot x\varepsilon, \dot{\hat{b}} = \alpha x\varepsilon. \label{eq:AdptRule2}
   \end{align}
 
   <p>次に強正実条件を確認します。式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=\varepsilon(s)/r(s)\)は次式となります。</p>
