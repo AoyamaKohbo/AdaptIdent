@@ -91,18 +91,18 @@
   <p>式\eqref{eq:TransFanc}の\(s\)に実数を代入すると\(G(s)\)も実数になり、s面の右半平面\(Re[s]\ge0\)に\(G(s)\)の極(分母：\(s^2+as+b=0\)の解)がないので、強正実条件(1)と(2)は確認できます。次に強正実条件(3)を確認します。</p>
  
   \begin{align}
-   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}] > 0\label{eq:RealPart}
+   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}]\label{eq:RealPart}
   \end{align}
 
 <p>分母を有利化すると次式になります。</p>
 
   \begin{align*}
-   Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(b-\omega^2 +ja\omega)}{(b -\omega^2)^2 + a^2\omega^2}]\\
+   (式\eqref{eq:ModPara}) &= Re[\frac{(1+jc\omega)(b-\omega^2 +ja\omega)}{(b -\omega^2)^2 + a^2\omega^2}]\\
    &= Re[\frac{(b-\omega^2+ac\omega^2)+j\{c\omega(b-\omega^2)-a\omega\}}{(b -\omega^2)^2 + a^2\omega^2}]\\
-   &= \frac{b+(ac-1)\omega^2}{(b -\omega^2)^2 + a^2\omega^2}> 0 \label{eq:RealPart2}
+   &= \frac{b+(ac-1)\omega^2}{(b -\omega^2)^2 + a^2\omega^2} \label{eq:RealPart2}
    \end{align*}
 
-  <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば、強正実条件(3)が満足されます。</p>
+  <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば\(Re[G(j\omega)] > 0\)となり、強正実条件(3)が満足されます。</p>
 
   <p>動的システム\eqref{eq:VibEqn}に規範モデル\eqref{eq:MdlEqn}を適応させる適応同定則と強正実条件を以下にまとめます。</p>
   <p>適応同定則：</p>
