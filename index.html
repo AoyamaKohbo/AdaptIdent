@@ -80,6 +80,16 @@
   \begin{align}
    \dot{\hat{m}} = \alpha \ddot x_M \varepsilon \label{eq:AdptRule2}
   \end{align}
+ 
+  ここで、規範モデル\eqref{eq:MdlEqn}を次式のように変形します。
+    \begin{align}
+    \ddot x_M = - \frac{a \dot x_M + b(x_M - u)}{\hat m} \label{eq:ddxM}
+    \end{align}
+
+  式\eqref{eq:ddxM}を式\eqref{eq:AdptRule2}に代入して適応同定則は次式となります。
+  \begin{align}
+   \dot{\hat{m}} = -\alpha\varepsilon\frac{a \dot x_M + b(x_M - u)}{\hat m} \label{eq:AdptRule3}
+  \end{align}
 
   <p>次に強正実条件を確認します。
     式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=\varepsilon(s)/r(s)\)は次式となります。</p>
@@ -105,7 +115,7 @@
   <p>動的システム\eqref{eq:VibEqn}に規範モデル\eqref{eq:MdlEqn}を適応させる適応同定則と強正実条件を以下にまとめます。</p>
   <p>適応同定則：</p>
   \begin{align*}
-   \dot{\hat{m}} = \alpha \ddot x_M\varepsilon
+   \dot{\hat{m}} = -\alpha\varepsilon\frac{a \dot x_M + b(x_M - u)}{\hat m} \label{eq:AdptRule4}
   \end{align*}
 
   <p>強誠実条件：</p>
@@ -113,8 +123,7 @@
    c > \frac{m}{a}
   \end{align*} 
 
-  <p>適応同定則の\(\ddot x_M\)は計算機の中で生成される規範モデルの加速度なので算出できます。
-    この適応同定事例では、粘弾性係数\(a\)、\(b\)を既知とする場合、質量または慣性モーメントの同定に有効です。</p>
+  <p>この適応同定事例では、粘弾性係数\(a\)、\(b\)を既知とする場合、質量または慣性モーメントの同定に有効です。</p>
   
   <p><a href="https://aoyamabohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
