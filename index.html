@@ -19,111 +19,109 @@
 
   <body>
     <h3>超安定論による適応同定</h3>
-    <p> 次の動的システムの適応同定について考察しましょう。この動的システムは現象としては減衰を有する単振動系です。</p>
-
+    <p> <a href="https://aoyamakohbo.github.io/AdaptCont/">モデル規範適応制御</a>では、
+      次の不確定性を有する運動制御システムについて考察しています。</p>
     \begin{align}
-    m\ddot x + a\dot x + bx = bu \label{eq:VibEqn}
+      \ddot x &=~ \eta v   \label{eq:RefSys}\\
+      v &=~ - a\dot x - b(x - u)  \label{eq:FdBkSys}
+    \end{align}
+    <p>ここに、\(x\)は変位、\(a > 0\)は粘性係数、\(b > 0\)は弾性係数、\(\eta\)は不確定性です。
+      \(v\)は運動システム\eqref{eq:RefSys}を安定化するための比例微分フィードバックです。</p>
+      <p>比例微分フィードバック\(v\)を運動システム\eqref{eq:RefSys}に代入すると、
+        運動制御システムは次式となります。</p>
+    \begin{align}
+      \ddot x + \eta a\dot x + \eta b(x - u)= 0  \label{eq:ObjSys}
     \end{align}
 
-     <p> ここに、\(x\)は変位、\(m > 0\)は質量または慣性モーメント、\(a > 0\)は粘性係数、\(b > 0\)は弾性係数です。計算機の中で計算する規範モデルを次式で与えます。 </p> 
-
+    <p>不確定性\(\eta\)は未知となるので、
+      \(\eta\)の推定値を\(\hat \eta\)として計算機の中で計算する同定モデルを次式で与えます。 </p> 
     \begin{align}
-    \hat m\ddot x_M + a \dot x_M + bx_M = bu \label{eq:MdlEqn}
+      \ddot x_M + \hat\eta a \dot x_M + \hat\eta b(x_M - u) = 0 \label{eq:MdlEqn}
     \end{align}
+    <p> ここに、\(x_M\)は規範モデルの変位、\(\hat \eta\)は\(\eta\)の推定値です。</p>
 
-     <p> ここに、\(x_M\)は規範モデルの変位、\(\tilde m\)は\(m\)の推定値です。 </p> 
-
-     <p> 式\eqref{eq:MdlEqn}の両辺から式\eqref{eq:VibEqn}の両辺をそれぞれ引きます。 </p> 
-
+    <p>\(\tilde\eta=\hat\eta - \eta\)とおいて運動システム\eqref{eq:RefSys}を次式のように変形します。</p>
     \begin{align*}
-    (\hat m\ddot x_M - m\ddot x) + a(\dot x_M - \dot x)  + b(\dot x_M - \dot x) = (\hat m - m)\ddot x_M + m(\ddot x_M - \ddot x) + a (\dot x_M - \dot x) +b (x_M - x) = 0
+     \ddot x =~ (\eta - \hat\eta) v + \hat\eta v = -\tilde\eta v + \hat\eta v = -\tilde\eta v - \hat\eta a\dot x - \hat\eta b(x - u)
     \end{align*}
-
-     <p> ここで、\(e = x_M - x\)、\(\tilde m = \hat m - m\)とおくと次式が得られます。 </p> 
-
+    <p>上式から次式が得られます。</p>
     \begin{align}
-    m\ddot e + a \dot e + b e = - \tilde m \ddot x_M \label{eq:ErrEqn}
+     \ddot x + \hat\eta a\dot x + \hat\eta b(x - u) = -\tilde\eta v   \label{eq:ObjSys2}
     \end{align}
 
-     <p><a href="https://aoyamabohbo.github.io/HypStb/">Popovの超安定論</a>を適用するために\(r\)と\(\varepsilon\)を次式で与えます。 </p> 
-
+    <p> 式\eqref{eq:MdlEqn}の両辺から式\eqref{eq:ObjSys2}の両辺をそれぞれ引き、
+      \(e = x_M - x\)とおくと次式が得られます。 </p> 
     \begin{align}
-    r = \tilde m \ddot x_M,~~~\varepsilon = e + c\dot e. \label{eq:ExdEqn}
+      \ddot e + \hat\eta a \dot e + \hat\eta b e = \tilde\eta v \label{eq:ErrEqn}
     \end{align}
 
-    式\eqref{eq:ErrEqn}と\eqref{eq:ExdEqn} から線形前向きブロックの入力\(-r\)と出力\(\varepsilon\)の関係式は次式となります。
+    <p><a href="https://aoyamabohbo.github.io/HypStb/">Popovの超安定論</a>を適用するために\(w\)と\(\varepsilon\)を次式で与えます。 </p> 
+
     \begin{align}
-    m\ddot e + a e + b e = -r,~~~\varepsilon = e + ce.  \label{eq:ErrEqn2}
+    w = -\tilde\eta v,~~~\varepsilon = e + c\dot e. \label{eq:ExdEqn}
     \end{align}
 
-    <p> すると、Popov積分は次式となります。 </p> 
+    式\eqref{eq:ErrEqn}と\eqref{eq:ExdEqn} から線形前向きブロックの入力\(-w\)と出力\(\varepsilon\)の関係式は次式となります。
+    \begin{align}
+      \ddot e + \hat\eta a e + \hat\eta b e = -w,~~~\varepsilon = e + ce.  \label{eq:ErrEqn2}
+    \end{align}
 
+  <p>すると、Popov積分は次式となります。 </p> 
    \begin{align}
-   \int_{0}^{t}r\varepsilon dt= \int_{0}^{t}\tilde m \ddot x_M \varepsilon dt \label{eq:IntgEqn}
+    \int_{0}^{t}w\varepsilon dt= -\int_{0}^{t}\tilde\eta v \varepsilon dt \label{eq:IntgEqn}
    \end{align}
    
-    <p> 適応同定を実現するために適応同定則を次式で与えます。 </p> 
-   
+  <p>適応同定を実現するために適応同定則を次式で与えます。</p> 
    \begin{align}
-   \dot{\tilde{m}} = \alpha \ddot x_M\varepsilon \label{eq:AdptRule}
+   \dot{\tilde\eta} = -\alpha v \varepsilon \label{eq:AdptRule}
    \end{align}
    
     <p> ここに、\(\alpha\)、\(\beta\)は定数です。 式\eqref{eq:IntgEqn}に式\eqref{eq:AdptRule}を代入すると次式が得られます。 </p> 
    
    \begin{align*}
-   \int_{0}^{t}r\varepsilon dt= \int_{0}^{t}\frac{1}{\alpha}\dot{\tilde{m}}\tilde{m} dt = [\frac{1}{2\alpha}\tilde{m}^2]_0^t = \frac{1}{2\alpha}\{\tilde{m}(t)^2 - \tilde{m}(0)^2\}\ge -\frac{1}{2\alpha}\tilde{m}(0)^2
+   \int_{0}^{t}r\varepsilon dt= \frac{1}{\alpha}\int_{0}^{t}\dot{\tilde\eta}\tilde\eta dt = \frac{1}{2\alpha}[\tilde\eta^2]_0^t = \frac{1}{2\alpha}\{\tilde\eta(t)^2 - \tilde\eta(0)^2\}\ge -\frac{1}{2\alpha}\tilde\eta(0)^2
    \end{align*}
 
-   <p> これで適応同定則\eqref{eq:AdptRule}によりPopovの積分不等式が成立することが確認できました。\(m\)は定数なので、
-    \(\dot{\tilde m} = \dot{\hat m}\)となることに注意すれば適応同定則は次式となります。 </p> 
+   <p> これで適応同定則\eqref{eq:AdptRule}によりPopovの積分不等式が成立することが確認できました。
+    \(\eta\)は定数なので\(\dot{\tilde\eta} = \dot{\hat\eta}\)となることに注意すれば適応同定則は次式となります。</p> 
   
   \begin{align}
-   \dot{\hat{m}} = \alpha \ddot x_M \varepsilon \label{eq:AdptRule2}
+   \dot{\hat{\eta}} = - \alpha v \varepsilon \label{eq:AdptRule2}
   \end{align}
  
-  ここで、規範モデル\eqref{eq:MdlEqn}を次式のように変形します。
-    \begin{align}
-    \ddot x_M = - \frac{a \dot x_M + b(x_M - u)}{\hat m} \label{eq:ddxM}
-    \end{align}
-
-  式\eqref{eq:ddxM}を式\eqref{eq:AdptRule2}に代入して適応同定則は次式となります。
+  <p>次に<a href="https://aoyamabohbo.github.io/HypStb/">Popovの超安定論</a>の強正実条件を確認します。
+    \(w\)と\(\varepsilon\)のラプラス変換をそれぞれ\(W(s)\)と\(E(s)\)とすると、
+    式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=-E(s)/W(s)\)は次式となります。</p>
   \begin{align}
-   \dot{\hat{m}} = -\alpha\varepsilon\frac{a \dot x_M + b(x_M - u)}{\hat m} \label{eq:AdptRule3}
-  \end{align}
-
-  <p>次に強正実条件を確認します。
-    式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=\varepsilon(s)/r(s)\)は次式となります。</p>
-  \begin{align}
-   G(s) = \frac{1+cs}{m s^2 + a s + b} \label{eq:TransFanc}
+   G(s) = \frac{1+cs}{s^2 + \hat\eta a s + \hat\eta b} \label{eq:TransFanc}
   \end{align}
  
   <p>式\eqref{eq:TransFanc}の\(s\)に実数を代入すると\(G(s)\)も実数になり、s面の右半平面\(Re[s]\ge0\)に\(G(s)\)の極(分母：\(s^2+as+b=0\)の解)がないので、強正実条件(1)と(2)は確認できます。次に強正実条件(3)を確認します。</p>
- 
   \begin{align}
-   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-m\omega^2 +ja\omega + b}] = Re[\frac{1+jc\omega}{b - m\omega^2 +ja\omega}]\label{eq:RealPart}
+   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +j\hat\eta a\omega + \hat\eta b}] = Re[\frac{1+jc\omega}{\hat\eta b - \omega^2 +j\hat\eta a\omega}]\label{eq:RealPart}
   \end{align}
 
 <p>分母を有利化すると次式になります。</p>
   \begin{align*}
-   Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(b - m\omega^2 - ja\omega)}{(b - m\omega^2)^2 + c^2\omega^2}]\\
-   &= Re[\frac{\{b + (ca - m)\omega^2\} - j\omega(bc - a - m\omega^2)}{(b -\omega^2)^2 + a^2\omega^2}]\\
-   &= \frac{b + (ca - m)\omega^2}{(b -\omega^2)^2 + a^2\omega^2} \label{eq:RealPart2}
+   Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(\hat\eta b - \omega^2 - j\hat\eta a\omega)}{(\hat\eta b - \omega^2)^2 + c^2\omega^2}]\\
+   &= Re[\frac{\{\hat\eta b + (\hat\eta ca - 1)\omega^2\} - j\omega(\hat\eta bc - \hat\eta a - \omega^2)}{(\hat\eta b -\omega^2)^2 + (\hat\eta a)^2\omega^2}]\\
+   &= \frac{\hat\eta b + (\hat\eta ca - 1)\omega^2}{(\hat\eta b -\omega^2)^2 + (\hat\eta a)^2\omega^2} \label{eq:RealPart2}
    \end{align*}
 
-  <p>分子の中の\(ca - m>0\)、すなわち\(c>m/a\)であれば\(Re[G(j\omega)] > 0\)となり、強正実条件(3)が満足されます。</p>
+  <p>分子の中の\(\hat\eta ca - 1>0\)、すなわち\(c>1/\hat\eta a\)であれば\(Re[G(j\omega)] > 0\)となり、強正実条件(3)が満足されます。</p>
 
-  <p>動的システム\eqref{eq:VibEqn}に規範モデル\eqref{eq:MdlEqn}を適応させる適応同定則と強正実条件を以下にまとめます。</p>
+  <p>不確定性\(\eta\)を有する運動制御システム\eqref{eq:ObjSys}に、
+    同定モデル\eqref{eq:MdlEqn}を適応させて\(\eta\)を同定するための同定則と強正実条件を以下にまとめます。</p>
   <p>適応同定則：</p>
   \begin{align*}
-   \dot{\hat{m}} = -\alpha\varepsilon\frac{a \dot x_M + b(x_M - u)}{\hat m} \label{eq:AdptRule4}
+    \dot{\hat{\eta}} &=~ -\alpha v\varepsilon\\
+    v &=~ - a\dot x - b(x - u)  
   \end{align*}
 
   <p>強誠実条件：</p>
   \begin{align*}
-   c > \frac{m}{a}
+   c > \frac{1}{\hat\eta a}
   \end{align*} 
-
-  <p>この適応同定事例では、粘弾性係数\(a\)、\(b\)を既知とする場合、質量または慣性モーメントの同定に有効です。</p>
   
   <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
