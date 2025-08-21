@@ -32,13 +32,15 @@
     \begin{align}
       \ddot x + \eta a\dot x + \eta b(x - u)= 0  \label{eq:ObjSys}
     \end{align}
+    <p>ここでは不確定性\(\eta\)を同定することにより運動制御システム\eqref{eq:ObjSys}を確定する手法について検討します。</p>
 
     <p>不確定性\(\eta\)は未知となるので、
       \(\eta\)の推定値を\(\hat \eta\)として計算機の中で計算する同定モデルを次式で与えます。 </p> 
     \begin{align}
       \ddot x_M + \hat\eta a \dot x_M + \hat\eta b(x_M - u) = 0 \label{eq:MdlEqn}
     \end{align}
-    <p> ここに、\(x_M\)は規範モデルの変位、\(\hat \eta\)は\(\eta\)の推定値です。</p>
+    <p> ここに、\(x_M\)は規範モデルの変位、\(\hat \eta\)は\(\eta\)の推定値です。
+      \(\hat\eta\)が不確定性\(\eta\)と一致すれば同定モデル\eqref{eq:MdlEqn}は運動制御システム\eqref{eq:ObjSys}に一致します。</p>
 
     <p>\(\tilde\eta=\hat\eta - \eta\)とおいて運動システム\eqref{eq:RefSys}を次式のように変形します。</p>
     \begin{align*}
@@ -114,8 +116,10 @@
     同定モデル\eqref{eq:MdlEqn}を適応させて\(\eta\)を同定するための同定則と強正実条件を以下にまとめます。</p>
   <p>適応同定則：</p>
   \begin{align*}
-    \dot{\hat{\eta}} &=~ -\alpha v\varepsilon\\
-    v &=~ - a\dot x - b(x - u)  
+    \dot{\hat{\eta}} &=~ -\alpha v\varepsilon,\\
+    v &=~ - a\dot x - b(x - u),\\
+    \varepsilon &=~ e + c\dot e,\\
+    e &=~ x_M -x.
   \end{align*}
 
   <p>強誠実条件：</p>
